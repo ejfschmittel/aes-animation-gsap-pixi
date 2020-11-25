@@ -9,7 +9,10 @@
 
 
     <script src="utils.js"></script>
+    <script src="BorderContainer.js"></script>
+    <script src="CharInCircle.js"></script>
     <script src="RoundedTextRect.js"></script>
+    <script src="4By4HexGrid.js"></script>
     <script src="Arrow.js"></script>
     <script src="StaggeredFadeInText.js"></script>
     <script src="pages/Page.js"></script>
@@ -17,7 +20,11 @@
     <script src="pages/page1.js"></script>
     
     <script src="pages/page2.js"></script>
+      <script src="pages/page3.js"></script>
+    <script src="pages/page4.js"></script>
     <script src="pages/page5.js"></script>
+       <script src="pages/page6.js"></script>
+       <script src="pages/page7.js"></script>
     <link href="main.css" rel="stylesheet" />
 </head>
 <body>
@@ -43,198 +50,32 @@
 
            const page1 = new Page1();
            const page2 = new Page2();
+            const page3= new Page3();
+           const page4 = new Page4();
            const page5 = new Page5();
+           const page6 = new Page6();
+           const page7 = new Page7();
            const menu = new Menu();
            menu.registerPage(page1)
            menu.registerPage(page2)
+            menu.registerPage(page3)
+           menu.registerPage(page4)
            menu.registerPage(page5);
+            menu.registerPage(page6);
+            menu.registerPage(page7);
 
-           menu.goToPage(1)
+     
 
         
             app.stage.addChild(menu);
 
             document.querySelector("#gameDiv").appendChild(app.view)
 
-           /* setTimeout(() => {
-                page5.mainAnimation();
-            }, 1500)*/
+
+            // starts the animation on page 0;
+            menu.goToPage(6)
         }
 
-
-
-
-       /* 
-       function init(){
-            initOne = new RoundRectLabel("Add Round Key", 100,100)
-
-            mainRoundOne = new RoundRectLabel("1 - SubBytes", 100,200)
-             mainRoundTwo = new RoundRectLabel("2 - ShiftRows", 100,250)
-             mainRoundThree = new RoundRectLabel("3 - MixColumns", 100,300)
-             mainRoundFour = new RoundRectLabel("4 - AddRoundKey", 100,350)
-         
-            finalRoundOne = new RoundRectLabel("SubBytes", 100,450)
-            finalRoundTwo = new RoundRectLabel("ShiftRows", 100,500)
-            finalRoundThree = new RoundRectLabel("AddRoundKey", 100,550)
-
-            tester = new PIXI.Graphics();
-            tester.beginFill(0xFFFFFF);
-            tester.drawRect(600,600, 50, 50);
-            tester.endFill();
-            tester.alpha = 0;
-
-            counterText =   new PIXI.Text("Round: 1",
-                                    {
-                                        fontFamily : 'Arial', 
-                                        fontSize: 50, fill : 0xff1010, 
-                                        align : 'center',
-                            
-                                    }
-                                );
-            counterText.position.set(500, 200) 
-
-            runner = new PIXI.Graphics();
-            runner.beginFill(0xFFFFFF);
-            runner.drawRect(180, 50, 50, 50)
-            runner.endFill();
-            runner.tint = 0xFF0000;
-
-            app.stage.addChild(runner)
-
-            app.stage.addChild(initOne)
-            app.stage.addChild(mainRoundOne)
-            app.stage.addChild(mainRoundTwo)
-            app.stage.addChild(mainRoundThree)
-            app.stage.addChild(mainRoundFour)
-
-            app.stage.addChild(finalRoundOne)
-            app.stage.addChild(finalRoundTwo)
-            app.stage.addChild(finalRoundThree)
-  
-             app.stage.addChild(counterText)
-
-             app.stage.addChild(tester);
-
-            setTimeout(() => {
-                startAnimation();
-            }, 1500)
-         
-        }
-
-
-        let tl;
-        let counter = 1;
-        function looper(loops, tl, label){
-            tl.timeScale(4)
-            if(counter < loops){
-                  setCounter(counter+1)
-                tl.seek(label);
-      
-              
-            }
-        }
-
-        function setCounter(count){
-            counter = count;
-            counterText.text = `Round: ${count}`;
-        }
-
-        function startAnimation(){
-
-            gsap.to(tester, {alpha: 1, duration: 3})
-
-            tl = gsap.timeline({defaults: {duration: 1}});
-
-            tl.to(runner, {y: 90, duration: .5}, "start")
-             tl.add(() => blink(initOne.getRect(), 0x00FF00, .1), "start+=.1")
-       
-            tl.to(runner, {y: 330}, "loop")
-            tl.add(() => blink(mainRoundOne.getRect(), 0x00FF00, .1), "loop+=.1")
-            tl.add(() => blink(mainRoundTwo.getRect(), 0x00FF00, .1), "loop+=.3")
-            tl.add(() => blink(mainRoundThree.getRect(), 0x00FF00, .1), "loop+=.5")
-            tl.add(() => blink(mainRoundFour.getRect(), 0x00FF00, .1), "loop+=.7")
-           
-
-            tl.to(runner, {x: 200})
-            tl.to(runner, {y: 90})
-            tl.to(runner, {x: 0})
-            tl.call(looper, [9, tl, "loop"])
-         
-            tl.to(runner, {y: 330, onStart: () => tl.timeScale(1), onComplete: () => setCounter(counter+1) }, "end")
-            tl.add(() => blink(mainRoundOne.getRect(), 0x00FF00, .1), "end+=.1")
-            tl.add(() => blink(mainRoundTwo.getRect(), 0x00FF00, .1), "end+=.3")
-            tl.add(() => blink(mainRoundThree.getRect(), 0x00FF00, .1), "end+=.5")
-            tl.add(() => blink(mainRoundFour.getRect(), 0x00FF00, .1), "end+=.7")
-
-            tl.to(runner, {y: 500}, "final")
-            tl.add(() => blink(finalRoundOne.getRect(), 0x00FF00, .1), "final+=.1")
-            tl.add(() => blink(finalRoundTwo.getRect(), 0x00FF00, .1), "final+=.3")
-            tl.add(() => blink(finalRoundThree.getRect(), 0x00FF00, .1), "final+=.5")
-        }
-
-        function blink(target, color, duration){
-            const tl = gsap.timeline({defaults: {duration: 0}});
-            let oldTint = target.tint;
-            tl.to(target, {tint: color})
-            tl.to(target, {tint: 0xFFFFFF}, `+=${duration}`)
-
-            return tl;
-        }
-
-    
-
-
-  
-
-        class RoundRectLabel extends PIXI.Container{
-
-            constructor(text, x, y, rectStyles, textStyles){
-                super();
-                this.position.set(x,y)
-           
-                this.text =  new PIXI.Text(text,
-                                    {
-                                        fontFamily : 'Arial', 
-                                        fontSize: 24, fill : 0xff1010, 
-                                        align : 'center',
-                                        ...textStyles
-                                    }
-                                );
-
-                
-
-                this.rectElement = new PIXI.Graphics();
-                this.rectElement.beginFill(0xFFFFFF);
-                this.rectElement.drawRoundedRect(0,0,this.text.width + 40, this.text.height + 14);
-                this.rectElement.endFill();
-
-                this.addChild(this.rectElement)
-                this.addChild(this.text)
-          
-                
-                this.text.position.set(this.width / 2 - this.text.width / 2, this.height/2 - this.text.height /2 )
-            }
-
-            setText(text){
-                // set the text
-                this.text.text = text;
-                // update rect size;
-                this.rectElement.width = this.text.width + 40;
-                this.rectElement.height = this.text.height + 14;
-
-                // recalc width
-                this.text.position.set(this.width / 2 - this.text.width / 2, this.height/2 - this.text.height /2 )
-            }
-
-            getRect(){
-                return this.rectElement;
-            }
-
-            getText(){
-                return this.text;
-            }
-        }*/
-   
 
 
     </script>

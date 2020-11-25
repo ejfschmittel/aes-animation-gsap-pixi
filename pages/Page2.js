@@ -119,7 +119,7 @@ class Page2 extends Page{
         const binaryArray = this.generateBinary(20);
     
         this.createMainTimeline();
-        this.getMainTL().to(counter, {ease: `steps(${binaryArray.length-1})`, duration: 3, repeat: 3, val: binaryArray.length-1, loop: true,onUpdate: () => {
+        this.getMainTL().to(counter, {ease: `steps(${binaryArray.length-1})`, duration: 3, repeat: 2, val: binaryArray.length-1, loop: true,onUpdate: () => {
             this.arrowText1.text = binaryArray[counter.val];
             this.arrowText2.text = binaryArray[(counter.val + 1) % (binaryArray.length-1)];
             this.arrowText3.text = binaryArray[(counter.val + 2) % (binaryArray.length-1)];

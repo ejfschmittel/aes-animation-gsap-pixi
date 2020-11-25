@@ -74,6 +74,8 @@ class Menu extends PIXI.Container{
         console.log(this.currentPage)
         if(this.currentPage !== this.pages.length -1){
             this.goToPage(this.currentPage + 1)
+        }else{
+            console.log("no other page found")
         }
     }
 
